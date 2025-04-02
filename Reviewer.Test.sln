@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reviewer_Test", "Reviewer_Test\Reviewer_Test.csproj", "{6CF65D38-409C-4DEA-97E5-C44ECAC6D4C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reviewer.Test", "Reviewer_Test\Reviewer.Test.csproj", "{6CF65D38-409C-4DEA-97E5-C44ECAC6D4C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
