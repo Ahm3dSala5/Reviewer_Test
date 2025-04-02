@@ -4,9 +4,10 @@ using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 using System;
 using System.Xml.Serialization;
+using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Reviewer_Test
-// this pice not work 135
 {
     public class ReviwerReviewEditsTests : IDisposable
     {
@@ -14,7 +15,7 @@ namespace Reviewer_Test
 
         public void Dispose()
         {
-            driver.Dispose();
+           // driver.Dispose();
         }
 
         [TearDown]
@@ -22,7 +23,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-                driver.Quit();
+             //   driver.Quit();
             }
         }
 
@@ -47,209 +48,259 @@ namespace Reviewer_Test
         }
 
         [Test]
-        public void ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage()
+        public void ViewEditPage_ViewEditOptionTest()
         {
-            var reviewEdits = driver.FindElement
-                (By.XPath("//*[@id=\"m_ver_menu\"]/ul/li[5]/a/span"));
-            reviewEdits.Click();
+            var viewEditOption = driver.FindElement
+                (By.XPath("//*[@id=\"m_ver_menu\"]/ul/li[4]/a"));
+
+            Assert.IsTrue(viewEditOption.Enabled);
+            Assert.IsTrue(viewEditOption.Displayed);
+            Assert.AreEqual(viewEditOption.Text, "View/Edit");
+            Assert.AreEqual(viewEditOption.GetAttribute("custom-data"), "View/Edit");
+            Assert.AreEqual(viewEditOption.GetAttribute("aria-expanded"), "false");
         }
 
         [Test]
-        public void ReviewerReviweEdit_WhenSelectAssetState_MustFilterAllAssetsByState()
+        public void ViewEditPage_OpenPage()
         {
-            // to click on ReviweEdit page 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
-
-            var assetState = driver.FindElement(By.Id("AssetStateIdChange"));
-            var selectedAssetState = new SelectElement(assetState);
-            selectedAssetState.SelectByIndex(0);
-            assetState.Click();
+            driver.Navigate().GoToUrl("http://ec2-34-226-24-71.compute-1.amazonaws.com/App/Assets/AssetClass");
         }
 
         [Test]
-        public void ReviewerReviweEdit_WhenSelectAssetClass_MustFilterAllAssetsByClass()
+        public void ViewEditPage_HiHostOperatorTest()
         {
-            // to click on configuration btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // to open View Edit page 
+            ViewEditPage_OpenPage();
 
-            var assetClass = driver.FindElement(By.Id("AssetClassIdChange"));
-            var selectedAssetClass = new SelectElement(assetClass);
-            selectedAssetClass.SelectByIndex(0);
-            assetClass.Click();
+            var hiHostOperator = driver.FindElement
+                (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
+            Assert.AreEqual(hiHostOperator.Text, "HI,");
+            Assert.True(hiHostOperator.Displayed);
+            Assert.True(hiHostOperator.Enabled);
+
+            var username = driver.FindElement(By.Id("UserName"));
+            Assert.True(username.Displayed);
+            Assert.True(username.Enabled);
         }
 
         [Test]
-        public void ReviewerReviweEdit_WhenSelectAssetSubClass_MustFilterAllAssetsBySubClass()
+        public void ViewEditPage_LogoutBtn()
         {
-            // to click on ReviweEdit page
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // to open View Edit page 
+            ViewEditPage_OpenPage();
 
-            var assetSubClass = driver.FindElement(By.Id("AssetSubClassDropDownChange"));
-            var selectedAssetSubClass = new SelectElement(assetSubClass);
-            selectedAssetSubClass.SelectByIndex(0);
-            assetSubClass.Click();
+            var hiHostOperator = driver.FindElement
+                (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
+            hiHostOperator.Click();
+
+            var logoutBtn = driver.FindElement
+                (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/div/div/div/div/ul/li[4]/a"));
+            Assert.IsTrue(logoutBtn.Enabled);
+            Assert.IsTrue(logoutBtn.Displayed);
+            Assert.AreEqual(logoutBtn.Text, "Logout");
+
+            var UrlBeforeClickOnLogout = driver.Url;
+            logoutBtn.Click();
+            var UrlAfterClickOnLogout = driver.Url;
+            Assert.AreNotEqual(UrlBeforeClickOnLogout, UrlAfterClickOnLogout);
         }
 
         [Test]
-        public void ReviewerReviweEdit_WhenSelectAssetType_MustFilterAllAssetsByType()
+        public void ViewEditPage_ModalTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // to open View Edit page 
+            ViewEditPage_OpenPage();
 
-            var assetType = driver.FindElement(By.Id("AssetTypeDropDownChange"));
-            var selectedAssetType = new SelectElement(assetType);
-            selectedAssetType.SelectByIndex(0);
-            assetType.Click();
+            var modalTitle = driver.FindElement(By.XPath("//*[@id=\"demo\"]"));
+            Assert.IsFalse(modalTitle.Displayed);
+            Assert.IsTrue(modalTitle.Enabled);
+
+            var selectedTenant = driver.FindElement(By.Id("TenantDropDownChange"));
+            var selectedTenantValue = new SelectElement(selectedTenant);
+            selectedTenantValue.SelectByIndex(0);
+
+            var closeBtn = driver.FindElement(By.Id("close"));
+            Assert.AreEqual(closeBtn.GetAttribute("type"), "button");
+            Assert.IsFalse(closeBtn.Displayed);
+            Assert.IsTrue(closeBtn.Enabled);
         }
 
         [Test]
-        public void ReviwerReviewEdit_WhenClickOnReviewEdit_MustOpenSamePage()
+        public void ViewEditPage_NotificationTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // to open View Edit page 
+            ViewEditPage_OpenPage();
 
-            var reviewEditBtn = driver.FindElement
-                (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/ul/li[3]/span"));
-            var expectedUrl = driver.Url;
-            reviewEditBtn.Click();
-            var actualUrl = driver.Url;
-
-            Assert.AreEqual(expectedUrl,actualUrl);
+            var notificationIcon = driver.FindElement
+                (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[1]/a"));
+            Assert.IsTrue(notificationIcon.Displayed);
+            Assert.IsTrue(notificationIcon.Enabled);
+            Assert.AreEqual(notificationIcon.GetAttribute("href"),
+                "http://ec2-34-226-24-71.compute-1.amazonaws.com/App/Messages");
+            notificationIcon.Click();
         }
 
         [Test]
-        public void ReviwerReviewEdit_WhenClickOnDashboardBtn_MustOpenDashboardPage()
+        public void ViewEditPage_PageTitleTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // to open View Edit page 
+            ViewEditPage_OpenPage();
+
+            var title = driver.FindElement
+                (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/h1/span"));
+            Assert.IsTrue(title.Displayed);
+            Assert.IsTrue(title.Enabled);
+            Assert.AreEqual(title.Text, "View/Edit");
+        }
+
+        [Test]
+        public void ViewEditPage_DashboardNavigationLinkTest()
+        {
+            // Open View Edit Page
+            ViewEditPage_OpenPage();
 
             var dashboardBtn = driver.FindElement
-                (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/ul/li[1]/a/span"));
-            var expectedUrl = "http://ec2-34-226-24-71.compute-1.amazonaws.com/App/ReviewerDashboard";
+                (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/ul/li[1]/a"));
+            Assert.IsTrue(dashboardBtn.Displayed);
+            Assert.IsTrue(dashboardBtn.Enabled);
+            Assert.AreEqual(dashboardBtn.Text,"Dashboard");
+
+            var UrlBeforeClick = driver.Url;
             dashboardBtn.Click();
-            var actualUrl = driver.Url;
-
-            Assert.AreEqual(expectedUrl, actualUrl);
-        }
-
-
-        // this pice not work
-        [Test]
-        public void ReviwerReviewEdit_WhenSelectShowingAssetBy25_MustDisplay25PerPAge()
-        {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
-
-            var showingPerPage = driver.FindElement
-               (By.XPath("//*[@id=\"AssetsTable_length\"]"));
-            showingPerPage.SendKeys("25");
+            var UrlAfterClick = driver.Url;
+            Assert.AreNotEqual(UrlBeforeClick,UrlAfterClick);
         }
 
         [Test]
-        public void ReviwerReviewEdit_WhenClickOnReviewIcon_MustOpenReviewForm()
+        public void ViewEditPage_ViewEditNavigationLinkTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // Open View Edit Page
+            ViewEditPage_OpenPage();
 
-            var showingPerPage = driver.FindElement
-               (By.XPath("//*[@id=\"AssetsTable\"]/tbody/tr[3]/td[9]/a[6]/i"));
-            showingPerPage.Click();
-
-            var reviewMessage = driver.FindElement(By.Id("reviewValue"));
-            reviewMessage.SendKeys("review Message");
-        }
-
-
-        [Test]
-        public void ReviewerReviewEdit_WhenCliclOnEditIcon_MustOpenEditForm()
-        {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
-
-            var editIcon = driver.FindElement
-                (By.XPath("//*[@id=\"AssetsTable\"]/tbody/tr[2]/td[9]/a[1]/i"));
-            editIcon.Click();
+            var viewEditBtn = driver.FindElement
+                (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/ul/li[3]/span"));
+            Assert.IsTrue(viewEditBtn.Displayed);
+            Assert.IsTrue(viewEditBtn.Enabled);
+            Assert.AreEqual(viewEditBtn.Text, "View/Edit");
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenEditAssetByValidData_MustSubmitEdit()
+        public void ViewEditPage_AssetSubclassDropdownlist()
         {
-            // to open edit form
-            ReviewerReviewEdit_WhenCliclOnEditIcon_MustOpenEditForm();
+            // Open View Edit Page
+            ViewEditPage_OpenPage();
 
-            var assetName = driver.FindElement(By.Id("AssetDes"));
-            assetName.SendKeys("Test Asset Name");
+            var AssetSubclassLabel = driver.FindElement
+                (By.XPath("/html/body/div[1]/div/div[2]/div[3]/div/div/div[1]/div[1]/div[1]/div/div/label"));
+            Assert.IsTrue(AssetSubclassLabel.Displayed);
+            Assert.IsTrue(AssetSubclassLabel.Enabled);
+            Assert.AreEqual(AssetSubclassLabel.Text,"Asset Subclass");
 
-            var assetDescription = driver.FindElement(By.Id("AssetTypesDesc"));
-            assetDescription.SendKeys("Test Asset Description");
-
-            var saveBtn = driver.FindElement(By.XPath("//*[@id=\"AssetCreateModal\"]/form/div[11]/button[1]"));
-            saveBtn.Click();
+            var AssetSubclassInput = driver.FindElement(By.Id("AssetSubClassDropDownChange"));
+            Assert.IsTrue(AssetSubclassInput.Displayed);
+            Assert.IsTrue(AssetSubclassInput.Enabled);
+            var SelectedAssetSubclass = new SelectElement(AssetSubclassInput);
+            SelectedAssetSubclass.SelectByIndex(0);
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenClickOnStatusIcon_MustOpenStatusForm()
+        public void ViewEditPage_AssetTypeDropdownlistTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // open edit view page
+            ViewEditPage_OpenPage();
 
-            var statusIcon = driver.FindElement
-               (By.XPath("//*[@id=\"AssetsTable\"]/tbody/tr[2]/td[9]/a[4]/i"));
-            statusIcon.Click();
+            var AssetTypeLabel = driver.FindElement
+                (By.XPath("/html/body/div[1]/div/div[2]/div[3]/div/div/div[1]/div[1]/div[2]/div/div/label"));
+            Assert.IsTrue(AssetTypeLabel.Displayed);
+            Assert.IsTrue(AssetTypeLabel.Enabled);
+            Assert.AreEqual(AssetTypeLabel.Text, "Asset Type");
+
+            var AssetTypeInput = driver.FindElement(By.Id("AssetTypeDropDownChange"));
+            Assert.IsTrue(AssetTypeInput.Displayed);
+            Assert.IsTrue(AssetTypeInput.Enabled);
+            var SelectedAssetType = new SelectElement(AssetTypeInput);
+            SelectedAssetType.SelectByIndex(0);
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenClickOnDeleteIcon_MustOpenConfirmationDeleteForm()
+        public void ViewEditPage_ConfigurationBtnTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // open edit view page
+            ViewEditPage_OpenPage();
 
-            var deleteIcon = driver.FindElement
-               (By.XPath("//*[@id=\"AssetsTable\"]/tbody/tr[2]/td[9]/a[3]/i"));
-            deleteIcon.Click();
-
-            var confirmationForm = driver.FindElement
-                (By.XPath("//*[@id=\"DeleteRequestModal\"]/div/div/div[1]"));
-            Assert.NotNull(confirmationForm);
+            var configBtn = driver.FindElement(By.Id("configBtn"));
+            Assert.IsFalse(configBtn.Enabled);
+            Assert.IsTrue(configBtn.Displayed);
+            Assert.AreEqual(configBtn.Text,"Configuration");
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenClickOnApprovedIcon_MustOpenApprovedForm()
+        public void ViewEditPage_DataTableLengthTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // open View Edit Page
+            ViewEditPage_OpenPage();
 
-            var approvedIcon = driver.FindElement
-                (By.XPath("//*[@id=\"AssetsTable\"]/tbody/tr[2]/td[9]/a[5]/i"));
-            approvedIcon.Click();
+            var ShowLabel = driver.FindElement
+                (By.XPath("//*[@id=\"AssetsTable_length\"]/label"));
+            Assert.IsTrue(ShowLabel.Enabled);
+            Assert.IsTrue(ShowLabel.Displayed);
+            Assert.IsTrue(ShowLabel.Text.Contains("Show"));
 
-            var approvedMessage = driver.FindElement
-                (By.XPath("//*[@id=\"ApprovedValue\"]"));
-            approvedMessage.SendKeys("Test Approved Message");
-
-            var saveBtn = driver.FindElement
-                (By.XPath("//*[@id=\"ApproveSaveBtn\"]"));
-            saveBtn.Click();
+            var TableLength = driver.FindElement(By.Name("AssetsTable_length"));
+            Assert.IsTrue(TableLength.Enabled);
+            Assert.IsTrue(TableLength.Displayed);
+            var selectedTableLength = new SelectElement(TableLength);
+            selectedTableLength.SelectByIndex(1);
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenClickOnNextBtn_MustGoToNextPage()
+        public void ViewEditPage_DataTableFilterTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // Open View Edit Page 
+            ViewEditPage_OpenPage();
 
-            var nextBtn = driver.FindElement(By.Id("AssetsTable_next"));
-            nextBtn.Click();
+            var SearchLabel = driver.FindElement(By.Id("AssetsTable_filter"));
+            Assert.IsTrue(SearchLabel.Enabled);
+            Assert.IsTrue(SearchLabel.Displayed);
+            Assert.AreEqual(SearchLabel.Text, "Search:");
+
+            var searchInput = driver.FindElement(By.XPath("//*[@id=\"AssetsTable_filter\"]/label/input"));
+            Assert.IsTrue(searchInput.Displayed);
+            Assert.IsTrue(searchInput.Enabled);
+            searchInput.SendKeys("test Word");
         }
 
         [Test]
-        public void ReviewerReviewEdit_WhenClickOnPreviousBtn_MustGoToPreviousPage()
+        public void ViewEditPage_ReOrderTableTest()
         {
-            // to click on ReviewEdit btn 
-            ReviewerReviweEdit_WhenClickOnReviewEdit_MustGoToReviewEditPage();
+            // open view Edit Page
+            ViewEditPage_OpenPage();
 
-            var previousBtn = driver.FindElement(By.Id("AssetsTable_previous"));
-            previousBtn.Click();
+
+
+        }
+
+        [Test]
+        public void ViewEditPage_FooterCopyrightTest()
+        {
+            // to open View Edit page
+            ViewEditPage_OpenPage();
+
+            var CopyRight = driver.FindElement(By.XPath("/html/body/footer/div/div/div[1]/span"));
+            Assert.IsTrue(CopyRight.Displayed);
+            Assert.IsTrue(CopyRight.Enabled);
+            Assert.AreEqual(CopyRight.Text, "2025 © CTDOT (Ver .)");
+        }
+
+        [Test]
+        public void ViewEditPage_MinimizeToggle()
+        {
+            // to open ViewEdit page
+            ViewEditPage_OpenPage();
+            var Toggle = driver.FindElement(By.Id("m_aside_left_minimize_toggle"));
+            Assert.IsTrue(Toggle.Displayed);
+            Assert.IsTrue(Toggle.Enabled);
+            Toggle.Click();
         }
     }
 }
