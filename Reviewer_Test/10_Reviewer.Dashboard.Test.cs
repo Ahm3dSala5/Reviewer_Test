@@ -580,5 +580,23 @@ namespace Reviewer_Test
             Assert.AreEqual(deleteRequestReviewBtn.Text, "Review");
             Assert.AreEqual(deleteRequestReviewBtn.GetAttribute("type"), "button");
         }
+
+        [Test]
+        public void DashboardPage_FooterCopyrightTest()
+        {
+            var CopyRight = driver.FindElement(By.XPath("/html/body/footer/div/div/div[1]/span"));
+            Assert.IsTrue(CopyRight.Displayed);
+            Assert.IsTrue(CopyRight.Enabled);
+            Assert.AreEqual(CopyRight.Text, "2025 © CTDOT (Ver .)");
+        }
+
+        [Test]
+        public void DashboardPage_MinimizeToggle()
+        {
+            var Toggle = driver.FindElement(By.Id("m_aside_left_minimize_toggle"));
+            Assert.IsTrue(Toggle.Displayed);
+            Assert.IsTrue(Toggle.Enabled);
+            Toggle.Click();
+        }
     }
 }
