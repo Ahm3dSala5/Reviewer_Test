@@ -6,6 +6,7 @@ using System;
 using System.Xml.Serialization;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
+using OpenQA.Selenium.DevTools.V130.CSS;
 
 namespace Reviewer_Test
 {
@@ -15,7 +16,7 @@ namespace Reviewer_Test
 
         public void Dispose()
         {
-           // driver.Dispose();
+            driver.Dispose();
         }
 
         [TearDown]
@@ -23,7 +24,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-             //   driver.Quit();
+              driver.Quit();
             }
         }
 
@@ -276,8 +277,75 @@ namespace Reviewer_Test
             // open view Edit Page
             ViewEditPage_OpenPage();
 
+            var columns = driver.FindElements(By.Id("AssetsTable"));
+            foreach(var column in columns)
+            {
+                Assert.IsTrue(column.Displayed);
+                Assert.IsTrue(column.Enabled);
+            }
 
+            var AssetId = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[1]"));
+            Assert.IsTrue(AssetId.Displayed);
+            Assert.IsTrue(AssetId.Enabled);
+            Assert.AreEqual(AssetId.Text,"Asset ID");
+            Assert.AreEqual(AssetId.GetAttribute("aria-controls"), "AssetsTable");
+            //AssetId.Click();
 
+            var AssetClass = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[2]"));
+            Assert.IsTrue(AssetClass.Displayed);
+            Assert.IsTrue(AssetClass.Enabled);
+            Assert.AreEqual(AssetClass.Text, "Asset Class");
+            Assert.AreEqual(AssetClass.GetAttribute("aria-controls"), "AssetsTable");
+            //AssetClass.Click();
+
+            var AssetSubClass = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[3]"));
+            Assert.IsTrue(AssetSubClass.Displayed);
+            Assert.IsTrue(AssetSubClass.Enabled);
+            Assert.AreEqual(AssetSubClass.Text, "Asset Subclass");
+            Assert.AreEqual(AssetSubClass.GetAttribute("aria-controls"), "AssetsTable");
+            //AssetSubClass.Click();
+
+            var AssetType = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[4]"));
+            Assert.IsTrue(AssetType.Displayed);
+            Assert.IsTrue(AssetType.Enabled);
+            Assert.AreEqual(AssetType.Text, "Asset Type");
+            Assert.AreEqual(AssetType.GetAttribute("aria-controls"), "AssetsTable");
+            //AssetType.Click();
+
+            var Operator = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[5]"));
+            Assert.IsTrue(Operator.Displayed);
+            Assert.IsTrue(Operator.Enabled);
+            Assert.AreEqual(Operator.Text, "Operator");
+            Assert.AreEqual(Operator.GetAttribute("aria-controls"), "AssetsTable");
+            //Operator.Click();
+
+            var Asset = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[6]"));
+            Assert.IsTrue(Asset.Displayed);
+            Assert.IsTrue(Asset.Enabled);
+            Assert.AreEqual(Asset.Text, "Asset");
+            Assert.AreEqual(Asset.GetAttribute("aria-controls"), "AssetsTable");
+            //Asset.Click();
+
+            var State = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[7]"));
+            Assert.IsTrue(State.Displayed);
+            Assert.IsTrue(State.Enabled);
+            Assert.AreEqual(State.Text, "State");
+            Assert.AreEqual(State.GetAttribute("aria-controls"), "AssetsTable");
+            //State.Click();
+
+            var CreatedTime = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[8]"));
+            Assert.IsTrue(CreatedTime.Displayed);
+            Assert.IsTrue(CreatedTime.Enabled);
+            Assert.AreEqual(CreatedTime.Text, "Created Time");
+            Assert.AreEqual(CreatedTime.GetAttribute("aria-controls"), "AssetsTable");
+            //CreatedTime.Click();
+
+            var Actions = driver.FindElement(By.XPath("//*[@id=\"AssetsTable\"]/thead/tr/th[9]"));
+            Assert.IsTrue(Actions.Displayed);
+            Assert.IsTrue(Actions.Enabled);
+            Assert.AreEqual(Actions.Text, "Actions");
+            Assert.AreEqual(Actions.GetAttribute("aria-controls"), "AssetsTable");
+            //Actions.Click();
         }
 
         [Test]

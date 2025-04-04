@@ -79,13 +79,13 @@ namespace Reviewer_Test
         }
 
         [Test]
-        public void DashboardPage_HiHostOperatorTest()
+        public void DashboardPage_HiReviewerTest()
         {
-            var hiHostOperator = driver.FindElement
+            var HIReviewe = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
-            Assert.AreEqual(hiHostOperator.Text, "HI,");
-            Assert.True(hiHostOperator.Displayed);
-            Assert.True(hiHostOperator.Enabled);
+            Assert.AreEqual(HIReviewe.Text, "HI,");
+            Assert.True(HIReviewe.Displayed);
+            Assert.True(HIReviewe.Enabled);
 
             var username = driver.FindElement(By.Id("UserName"));
             Assert.True(username.Displayed);
@@ -95,9 +95,9 @@ namespace Reviewer_Test
         [Test]
         public void DashboardPage_LogoutBtn()
         {
-            var hiHostOperator = driver.FindElement
+            var HiReviewer = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
-            hiHostOperator.Click();
+            HiReviewer.Click();
 
             var logoutBtn = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/div/div/div/div/ul/li[4]/a"));

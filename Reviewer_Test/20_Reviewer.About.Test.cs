@@ -105,16 +105,16 @@ namespace Reviewer_Test
         }
 
         [Test]
-        public void AboutPage_HiHostOperatorTest()
+        public void AboutPage_HiReviewerTest()
         {
             // to open about page 
             AboutPage_OpenPage();
 
-            var hiHostOperator = driver.FindElement
+            var HiReviewer = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
-            Assert.AreEqual(hiHostOperator.Text, "HI,");
-            Assert.True(hiHostOperator.Displayed);
-            Assert.True(hiHostOperator.Enabled);
+            Assert.AreEqual(HiReviewer.Text, "HI,");
+            Assert.True(HiReviewer.Displayed);
+            Assert.True(HiReviewer.Enabled);
 
             var username = driver.FindElement(By.Id("UserName"));
             Assert.True(username.Displayed);
@@ -127,9 +127,9 @@ namespace Reviewer_Test
             // to open about page 
             AboutPage_OpenPage();
 
-            var hiHostOperator = driver.FindElement
+            var HiReviewer = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/a/span[1]"));
-            hiHostOperator.Click();
+            HiReviewer.Click();
 
             var logoutBtn = driver.FindElement
                 (By.XPath("//*[@id=\"m_header_topbar\"]/div/ul/li[4]/div/div/div/div/ul/li[4]/a"));
