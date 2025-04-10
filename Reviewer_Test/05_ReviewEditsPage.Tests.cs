@@ -176,11 +176,11 @@ namespace Reviewer_Test
             // Open Review Edits Page
             ReviewEditPage_OpenPage();
 
-            var viewEditBtn = driver.FindElement
+            var reviewEdits = driver.FindElement
                 (By.XPath("/html/body/div[1]/div/div[2]/div[1]/div/div/ul/li[3]/span"));
-            Assert.IsTrue(viewEditBtn.Displayed);
-            Assert.IsTrue(viewEditBtn.Enabled);
-            Assert.AreEqual(viewEditBtn.Text, "Review Edits");
+            Assert.IsTrue(reviewEdits.Displayed);
+            Assert.IsTrue(reviewEdits.Enabled);
+            Assert.AreEqual(reviewEdits.Text, "Review Edits");
         }
 
         [Test]

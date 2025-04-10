@@ -351,7 +351,7 @@ namespace Reviewer_Test
             Assert.IsTrue(StartDate.GetAttribute("max").Contains($"{DateTime.UtcNow.Year}"));
         }
 
-        // End Date Label Must Linked With End Date But Is Linked With Start Date
+        //  End Date Label Must Linked With End Date But Is Linked With Start Date
         [Test]
         public void AssetAuditPage_EndDateTest()
         {
@@ -409,6 +409,18 @@ namespace Reviewer_Test
         }
 
         [Test]
+        public void AssetAuditPage_SubmitBtnTest()
+        {
+            // Open Asset Audit Page Page
+            AssetAuditPage_OpenPage();
+
+            var submitBtn = driver.FindElement(By.Id("subbtn"));
+            Assert.IsTrue(submitBtn.Enabled);
+            Assert.IsTrue(submitBtn.Displayed);
+            Assert.AreEqual(submitBtn.Text,"Submit");
+        }
+
+        [Test]
         public void AssetAuditPage_PaginateTest()
         {
             // Open Asset Audit Page Page
@@ -458,3 +470,5 @@ namespace Reviewer_Test
         }
     }
 }
+
+// page title btn rename it in all test cases
