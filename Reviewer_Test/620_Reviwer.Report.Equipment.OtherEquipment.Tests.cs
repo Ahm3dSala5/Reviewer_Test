@@ -20,7 +20,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-              driver.Quit();
+               driver.Quit();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Reviewer_Test
         }
 
         [Test]
-        public void OtherEquipmentPage_OperationsOptionTest()
+        public void OtherEquipmentPage_ReportsOptionTest()
         {
             var ReportsOption = driver.FindElement
                 (By.XPath("//*[@id=\"m_ver_menu\"]/ul/li[7]/a"));
@@ -101,7 +101,8 @@ namespace Reviewer_Test
         [Test]
         public void OtherEquipmentPage_OpenPage()
         {
-            driver.Navigate().GoToUrl("http://ec2-34-226-24-71.compute-1.amazonaws.com/App/Report/OtherEquipmentDetails");
+            driver.Navigate().
+                GoToUrl("http://ec2-34-226-24-71.compute-1.amazonaws.com/App/Report/OtherEquipmentDetails");
         }
 
         [Test]
