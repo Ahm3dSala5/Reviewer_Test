@@ -10,7 +10,7 @@ namespace Reviewer_Test
 
         public void Dispose()
         {
-          //  driver.Dispose();
+            driver.Dispose();
         }
 
         [TearDown]
@@ -18,7 +18,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-        //       driver.Quit();
+               driver.Quit();
             }
         }
 
