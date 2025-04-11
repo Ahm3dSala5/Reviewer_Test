@@ -10,7 +10,7 @@ namespace Reviewer_Test
 
         public void Dispose()
         {
-            driver.Dispose();
+            //driver.Dispose();
         }
 
         [TearDown]
@@ -18,7 +18,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-               driver.Quit();
+              // driver.Quit();
             }
         }
 
@@ -351,6 +351,141 @@ namespace Reviewer_Test
         {
             // Open Admin Maint Page
             AdninMaintBuildings_OpenPage();
+
+            var columns = driver.FindElements(By.Id("buildings"));
+            foreach(var column in columns)
+            {
+                Assert.IsTrue(column.Enabled);
+                Assert.IsTrue(column.Displayed);
+            }
+
+            var RowNo = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[1]"));
+            Assert.IsTrue(RowNo.Enabled);
+            Assert.IsTrue(RowNo.Displayed);
+            Assert.IsTrue(RowNo.Text.Equals("Row No"));
+            Assert.AreEqual(RowNo.GetAttribute("aria-sort"), "ascending");
+            Assert.AreEqual(RowNo.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(RowNo.GetAttribute("aria-label"), "Row No: activate to sort column descending");
+            RowNo.Click();
+
+            var assetId = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[2]"));
+            Assert.IsTrue(assetId.Enabled);
+            Assert.IsTrue(assetId.Displayed);
+            Assert.IsTrue(assetId.Text.Equals("Asset Id"));
+            Assert.AreEqual(assetId.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(assetId.GetAttribute("aria-label"), "Asset Id: activate to sort column ascending");
+            assetId.Click();
+
+            var BuildingsDesc = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[3]"));
+            Assert.IsTrue(BuildingsDesc.Enabled);
+            Assert.IsTrue(BuildingsDesc.Displayed);
+            Assert.IsTrue(BuildingsDesc.Text.Equals("Building Desc"));
+            Assert.AreEqual(BuildingsDesc.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(BuildingsDesc.GetAttribute("aria-label"), "Building Desc: activate to sort column ascending");
+            BuildingsDesc.Click();
+
+            var BuildingArea = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[4]"));
+            Assert.IsTrue(BuildingArea.Enabled);
+            Assert.IsTrue(BuildingArea.Displayed);
+            Assert.IsTrue(BuildingArea.Text.Equals("Building Area"));
+            Assert.AreEqual(BuildingArea.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(BuildingArea.GetAttribute("aria-label"), "Building Area: activate to sort column ascending");
+            BuildingArea.Click();
+
+            var OverAllRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[5]"));
+            Assert.IsTrue(OverAllRating.Displayed);
+            Assert.AreEqual(OverAllRating.Text,"Overall Rating");
+            Assert.AreEqual(OverAllRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(OverAllRating.GetAttribute("aria-label"), "Overall Rating: activate to sort column ascending");
+            OverAllRating.Click();
+
+            var ConditionAssessmentDate = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[6]"));
+            Assert.IsTrue(ConditionAssessmentDate.Enabled);
+            Assert.IsTrue(ConditionAssessmentDate.Displayed);
+            Assert.IsTrue(ConditionAssessmentDate.Text.Equals("Condition Assessment Date"));
+            Assert.AreEqual(ConditionAssessmentDate.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(ConditionAssessmentDate.GetAttribute("aria-label"), "Condition Assessment Date: activate to sort column ascending");
+            ConditionAssessmentDate.Click();
+
+            var SiteRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[7]"));
+            Assert.IsTrue(SiteRating.Enabled);
+            Assert.IsTrue(SiteRating.Displayed);
+            Assert.IsTrue(SiteRating.Text.Equals("Site Rating"));
+            Assert.AreEqual(SiteRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(SiteRating.GetAttribute("aria-label"), "Site Rating: activate to sort column ascending");
+            SiteRating.Click();
+
+            var SubStructureRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[8]"));
+            Assert.IsTrue(SubStructureRating.Enabled);
+            Assert.IsTrue(SubStructureRating.Displayed);
+            Assert.IsTrue(SubStructureRating.Text.Equals("Substructure Rating"));
+            Assert.AreEqual(SubStructureRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(SubStructureRating.GetAttribute("aria-label"), "Substructure Rating: activate to sort column ascending");
+            SubStructureRating.Click();
+
+            var ShellRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[9]"));
+            Assert.IsTrue(ShellRating.Enabled);
+            Assert.IsTrue(ShellRating.Displayed);
+            Assert.IsTrue(ShellRating.Text.Equals("Shell Rating"));
+            Assert.AreEqual(ShellRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(ShellRating.GetAttribute("aria-label"), "Shell Rating: activate to sort column ascending");
+            ShellRating.Click();
+
+            var InteriorRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[10]"));
+            Assert.IsTrue(InteriorRating.Enabled);
+            Assert.IsTrue(InteriorRating.Displayed);
+            Assert.IsTrue(InteriorRating.Text.Equals("Interior Rating"));
+            Assert.AreEqual(InteriorRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(InteriorRating.GetAttribute("aria-label"), "Interior Rating: activate to sort column ascending");
+            InteriorRating.Click();
+
+            var PlumbingRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[11]"));
+            Assert.IsTrue(PlumbingRating.Enabled);
+            Assert.IsTrue(PlumbingRating.Displayed);
+            Assert.IsTrue(PlumbingRating.Text.Equals("Plumbing Rating"));
+            Assert.AreEqual(PlumbingRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(PlumbingRating.GetAttribute("aria-label"), "Plumbing Rating: activate to sort column ascending");
+            PlumbingRating.Click();
+
+            var HVACRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[12]"));
+            Assert.IsTrue(HVACRating.Enabled);
+            Assert.IsTrue(HVACRating.Displayed);
+            Assert.IsTrue(HVACRating.Text.Equals("HVAC Rating"));
+            Assert.AreEqual(HVACRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(HVACRating.GetAttribute("aria-label"), "HVAC Rating: activate to sort column ascending");
+            HVACRating.Click();
+
+            var ElectricalRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[13]"));
+            Assert.IsTrue(ElectricalRating.Enabled);
+            Assert.IsTrue(ElectricalRating.Displayed);
+            Assert.IsTrue(ElectricalRating.Text.Equals("Electrical Rating"));
+            Assert.AreEqual(ElectricalRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(ElectricalRating.GetAttribute("aria-label"), "Electrical Rating: activate to sort column ascending");
+            ElectricalRating.Click();
+
+            var FireProtectionRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[14]"));
+            Assert.IsTrue(FireProtectionRating.Enabled);
+            Assert.IsTrue(FireProtectionRating.Displayed);
+            Assert.IsTrue(FireProtectionRating.Text.Equals("Fire Protection Rating"));
+            Assert.AreEqual(FireProtectionRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(FireProtectionRating.GetAttribute("aria-label"), "Fire Protection Rating: activate to sort column ascending");
+            FireProtectionRating.Click();
+
+            var ConveyanceRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[15]"));
+            Assert.IsTrue(ConveyanceRating.Enabled);
+            Assert.IsTrue(ConveyanceRating.Displayed);
+            Assert.IsTrue(ConveyanceRating.Text.Equals("Conveyance Rating"));
+            Assert.AreEqual(ConveyanceRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(ConveyanceRating.GetAttribute("aria-label"), "Conveyance Rating: activate to sort column ascending");
+            ConveyanceRating.Click();
+
+            var EquipmentRating = driver.FindElement(By.XPath("//*[@id=\"buildings\"]/thead/tr/th[16]"));
+            Assert.IsTrue(EquipmentRating.Enabled);
+            Assert.IsTrue(EquipmentRating.Displayed);
+            Assert.IsTrue(EquipmentRating.Text.Equals("Equipment Rating"));
+            Assert.AreEqual(EquipmentRating.GetAttribute("aria-controls"), "buildings");
+            Assert.AreEqual(EquipmentRating.GetAttribute("aria-label"), "Equipment Rating: activate to sort column ascending");
+            EquipmentRating.Click();
         }
 
         [Test]
