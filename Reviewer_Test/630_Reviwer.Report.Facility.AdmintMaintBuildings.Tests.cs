@@ -10,7 +10,7 @@ namespace Reviewer_Test
 
         public void Dispose()
         {
-            //driver.Dispose();
+            driver.Dispose();
         }
 
         [TearDown]
@@ -18,7 +18,7 @@ namespace Reviewer_Test
         {
             if (driver != null)
             {
-              // driver.Quit();
+               driver.Quit();
             }
         }
 
@@ -262,11 +262,11 @@ namespace Reviewer_Test
             Assert.AreEqual(assetClassLabel.Text, "Asset Class");
             Assert.AreEqual(assetClassLabel.GetAttribute("for"), "AssetClass");
 
-            var equipmentHeader = driver.FindElement
+            var FacilityHeader = driver.FindElement
                 (By.XPath("/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div/div/b"));
-            Assert.IsTrue(equipmentHeader.Enabled);
-            Assert.IsTrue(equipmentHeader.Displayed);
-            Assert.IsTrue(equipmentHeader.Text.Equals("Facility"));
+            Assert.IsTrue(FacilityHeader.Enabled);
+            Assert.IsTrue(FacilityHeader.Displayed);
+            Assert.IsTrue(FacilityHeader.Text.Equals("Facility"));
         }
 
         [Test]
